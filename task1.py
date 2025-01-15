@@ -52,10 +52,11 @@ class quadratic:
         # list self.roots
         # list should be sorted in ascending order
         # roots should be rounded to 2 decimal places
-        self.roots.append(round((-self.b + cmath.sqrt(self.d)).real / (2 * self.a), 2))
-        self.roots.append(round((-self.b - cmath.sqrt(self.d)).real / (2 * self.a), 2))
-
-        self.roots = sorted(self.roots)
+        if self.d >= 0:
+            self.roots.append(round((-self.b + cmath.sqrt(self.d)).real / (2 * self.a), 2))
+            self.roots.append(round((-self.b - cmath.sqrt(self.d)).real / (2 * self.a), 2))
+        
+            self.roots = sorted(self.roots)
 
     def axisOfSymmetry(self):
         # requires no positional arguments
@@ -74,7 +75,7 @@ class quadratic:
         x_vertex = -self.b / (2 * self.a)
         # Calculate the y-coordinate by substituting x_vertex into the quadratic equation
         y_vertex = self.a * (x_vertex ** 2) + self.b * x_vertex + self.c
-        return list(x_vertex, y_vertex)
+        return list((x_vertex, y_vertex))
 
 
 
@@ -85,37 +86,30 @@ if __name__ == "__main__":
     assert q1.discriminant() == 0
     q1.calcRoots()
     assert q1.roots == [-2,-2]
-#    assert q1.axisOfSymmetry == -2
-#    assert q1.vertex == [-2,0]
-#
-#    q2 = quadratic(1,1,-6)
-#    assert q2.isFactorable() == True
-#    assert q2.hasRealRoots() == True
-#    assert q2.discriminant() == 25
-#    assert q2.roots == [-3,2]
-#    assert q2.axisOfSymmetry == -0.5
-#    assert q2.vertex == [-0.5,-6.25]
-#
-#    q3 = quadratic(1,1,10)
-#    assert q3.isFactorable() == False
-#    assert q3.hasRealRoots() == False
-#    assert q3.discriminant() == -39
-#    assert q3.roots == []
-#    assert q3.axisOfSymmetry == -0.5
-#
-#    q4 = quadratic(1,10,1)
-#    assert q4.isFactorable() == False
-#    assert q4.hasRealRoots() == True
-#    assert q4.discriminant() == 96
-#    assert q4.roots == [-9.90,-0.10]
-#    assert q4.axisOfSymmetry == -2.5
+    assert q1.axisOfSymmetry() == -2
+    assert q1.vertex() == [-2,0]
 
-q4 = quadratic(1, 4, 4)
-q4.calcRoots()
+    q2 = quadratic(1,1,-6)
+    assert q2.isFactorable() == True
+    assert q2.hasRealRoots() == True
+    assert q2.discriminant() == 25
+    q2.calcRoots()
+    assert q2.roots == [-3,2]
+    assert q2.axisOfSymmetry() == -0.5
+    assert q2.vertex() == [-0.5,-6.25]
 
-print(q4.isFactorable())
-print(q4.hasRealRoots())
-print(q4.discriminant())
-print(q4.roots)
+    q3 = quadratic(1,1,10)
+    assert q3.isFactorable() == False
+    assert q3.hasRealRoots() == False
+    assert q3.discriminant() == -39
+    q3.calcRoots()
+    assert q3.roots == []
+    assert q3.axisOfSymmetry() == -0.5
 
-print(q4.axisOfSymmetry())
+    q4 = quadratic(1,10,1)
+    assert q4.isFactorable() == False
+    assert q4.hasRealRoots() == True
+    assert q4.discriminant() == 96
+    q4.calcRoots()
+    assert q4.roots == [-9.90,-0.10]
+    assert q4.axisOfSymmetry() == -5
